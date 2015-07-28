@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Proceduralni mapa</title>
+
+<script src="jquery-2.1.4.min.js"></script>
+<script src="map.lib.js"></script>
+
+</head>
+<body>
+
+ <canvas id="canvas" width="300" height="300"></canvas>
+
+<script>
+
+
+for(var i=0;i<20;i++){
+
+	var periode=Math.pow(2,i/5)+1;
+	var amplitude=Math.random()*10;
+	var rotation=Math.random()*360;
+	var startX=Math.random()*1000;
+	var startY=Math.random()*1000;
+
+	addGraph(periode,amplitude,rotation,startX,startY);
+
+}
+
+
+
+
+
+var size=1;
+
+
+function draw() {
+
+	map=getMap(1,1,300);
+	//console.log(map);
+
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+
+	ctx.fillStyle = "rgb(0,0,0)";
+	ctx.fillRect (0, 0,300, 300);
+
+	
+	for(var y=0;y<map.length;y++){
+	for(var x=0;x<map[y].length;x++){
+
+		if(map[y][x]>0)
+			ctx.fillStyle = '#000000';
+		else
+			ctx.fillStyle = '#3366ff';
+
+		ctx.fillRect (x*size, y*size, (x+1)*size, (y+1)*size);
+	}
+	}
+
+}
+
+draw();
+
+//document.write(renderMap(1,1,30));
+</script>
+
+
+
+</body>
+</html>
