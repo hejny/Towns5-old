@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Proceduralni mapa</title>
+
+    <script src="lib/jquery-1.11.3.js"></script>
+    <script src="lib/jquery-ui.js"></script>
+
+    <script src="lib/touch-punch.js"></script>
+    <script src="lib/mousewheel.js"></script>
+    <script src="map.lib.js"></script>
+    <!--<script src="model.lib.js" ></script>-->
+    <script src="graphic.lib.js"></script>
+    <script src="events.js"></script>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0"/>
+
+
+    <style type="text/css">
+        body {
+            background-color: #FFFFFF;
+            margin: 0px;
+            overflow:hidden;
+
+        }
+        body,td,th {
+            color: #000000;
+            font-size: 14px;
+            font-family: "trebuchet ms";
+        }
+        h1{
+            font-size: 25px;
+        }
+        a:link {
+            color: #5555dd;
+        }
+        a:visited {
+            color: #5555dd;
+        }
+        a:hover {
+            color: #5555dd;
+        }
+        a:active {
+            color: #5555dd;
+        }
+    </style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div style="position:absolute;width: 100%;height: 100%;z-index:3000;" id="map_drag">
+</div>
+
+
+<div style="position:absolute;width: 100%;height: 100%;font-size:2em;text-align:center;z-index:2000;" >
+    <div style="position: relative;top: 50%;transform: translateY(-50%);" id="loadbar"></div>
+</div>
+
+
+<canvas id="map_bg" width="100" height="100" style="position:absolute;top:0px;left:0px;z-index:1000;"></canvas>
+
+
+
+<script>
+
+
+    $( document ).ready(function() {//@todo sjednotit
+
+        $('#map_bg').attr('width',$(document).width()*3);
+        $('#map_bg').attr('height',$(document).height()*3);
+
+    });
+    $( window ).resize(function() {
+
+        //console.log('resized');
+        $('#map_bg').attr('width',$(document).width()*3);
+        $('#map_bg').attr('height',$(document).height()*3);
+
+    });
+
+
+</script>
+
+
+
+
+
+<div style="position:absolute;right:0px;top:10px;color:#ffffff;z-index:1500;">
+
+<table>
+
+    <tr>
+        <td>
+            fps:
+        </td>
+        <td id="fps">
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            canvas_mouse:
+        </td>
+        <td id="canvas_mouse">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            map_mouse:
+        </td>
+        <td id="map_mouse">
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            size_water:
+        </td>
+        <td id="size_water">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            size_spring:
+        </td>
+        <td id="size_spring">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            zoom:
+        </td>
+        <td id="map_zoom">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            rotation:
+        </td>
+        <td id="map_rotation">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            slope:
+        </td>
+        <td id="map_slope">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            perspective:
+        </td>
+        <td id="map_perspective">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            x:
+        </td>
+        <td id="map_x">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            y:
+        </td>
+        <td id="map_y">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            size:
+        </td>
+        <td id="map_size" >
+        </td>
+    </tr>
+</table>
+
+</div>
+
+
+
+</body>
+</html>
