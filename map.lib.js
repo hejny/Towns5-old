@@ -63,13 +63,18 @@ function getZ(x,y){
 	//var n=x*x*y*y;
 	//var n=Math.pow(Math.pow(x,n)+Math.pow(y,n),(1/(n-1)));//*x+y*y;
 
-    var n=Math.pow(Math.pow(x,3)+Math.pow(y,3),(1/2));
-	//var n=Math.pow(Math.pow(x,4)+Math.pow(y,4),(1/5));
+	var n=0;
 
-	//return(n/50);
+    //n+=Math.pow(Math.pow(x,3)+Math.pow(y,3),(1/2));
+    n+=Math.pow(Math.pow(x/2,3)+Math.pow(y,3),(1/1.41));
+
+	//n+=Math.pow(Math.pow(x,2)+Math.pow(y,3),(1/2.3));
 
 
-	//if(n<0)n=-n;
+	//n+=Math.pow(Math.pow(x,4)+Math.pow(y,4),(1/5));
+
+	//n=Math.round(n)/2;
+
 
     var z=numberOfPrimes(n,4);
 
@@ -170,7 +175,7 @@ function getPrimeMap(startX,startY,size){
 function roundMap(map){
 
 
-    var maxlevel=180;
+    var maxlevel=180;//180;
 
 
 	var map_=[];
@@ -319,7 +324,7 @@ var terrains=[
 	[ 9 , 22 , '51F311'] ,  //tráva(toxic)
 	[12 , 24 , '8ABC02'] ,  //tráva(jaro)
 	[ 8 , 26 , '2A7302'] ,  //tráva(normal)
-	[13 , 28 , '8A9002'] ,  //tráva(pozim)
+	[13 , 30 , '8A9002'] ,  //tráva(pozim)
 	[10 , 35 , '535805'] ,  //les
 	[ 5 , 37 , '878787'] ,  //kamení
 	[10 , 40 , '535805'] ,  //les

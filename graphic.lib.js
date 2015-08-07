@@ -17,6 +17,9 @@ var map_perspective= 0;
 var map_x=(Math.random()-0.5)*10000;
 var map_y=map_x+(Math.random()-0.5)*2000;
 
+//var map_x=0;
+//var map_y=0;
+
 
 //----
 
@@ -36,11 +39,21 @@ var canvas_mouse_y = 0;
 var map_mouse_x = 0;
 var map_mouse_y = 0;
 
+terrainCount=13;
+
+
+
+//----------------
+/*
+seedCount=1;
+//----
+
+treeCount=1;
+rockCount=1;*/
+
 //----------------
 
-terrainCount=13;
 seedCount=6;
-
 //----
 
 treeCount=6;
@@ -68,8 +81,8 @@ var map_rotation_sin_minus;
 var map_slope_m;
 var map_slope_n;
 
-var canvas_width;
-var canvas_height;
+
+
 
 
 //----------------Konstanty
@@ -194,6 +207,7 @@ loadMap();
 
 
 function drawMap(){
+    //alert('drawMap');
     //console.log('drawMap');
     //----------------
 
@@ -578,8 +592,8 @@ function updateMap(ms){
     if(map_slope<20)map_slope=20;
     if(map_slope>90)map_slope=90;
 
-    if(map_zoom>0)map_zoom=0;
-    if(map_zoom<-10)map_zoom=-10;
+    if(map_zoom>-1.5)map_zoom=-1.5;
+    if(map_zoom<-4)map_zoom=-4;
 
 
     if(map_perspective<0)map_perspective=0;
@@ -588,8 +602,6 @@ function updateMap(ms){
 
     //----------------Zm
 
-    canvas_width=map_bg.width;
-    canvas_height=map_bg.height;
 
     if(map_zoom_delta || !map_zoom_m){
         map_zoom_m=Math.pow(2,map_zoom);
@@ -618,7 +630,7 @@ function updateMap(ms){
 
 
         if(map_size<4)map_size=4;
-        if(map_size>160)map_size=160;
+        if(map_size>120)map_size=120;//160;
 
         //console.log(map_size);
 
@@ -643,7 +655,7 @@ function updateMap(ms){
     //----------------
 
 
-    size_water = (Math.sin(time / 1000) + 1) / 1 + 2;
+    /*size_water = (Math.sin(time / 1000) + 1) / 1 + 2;
 
     size_spring = (Math.sin(time/10000+(pi*(0/4)))+1)/3+1;
     size_summer = (Math.sin(time/10000+(pi*(1/4)))+1)/3+1;
@@ -655,7 +667,13 @@ function updateMap(ms){
     size_spring=Math.round(size_spring*100)/100;
     size_summer=Math.round(size_summer*100)/100;
     size_autumn=Math.round(size_autumn*100)/100;
-    size_winter=Math.round(size_winter*100)/100;
+    size_winter=Math.round(size_winter*100)/100;*/
+
+    size_water=1.6;
+    size_spring=1;
+    size_summer=1;
+    size_autumn=1;
+    size_winter=1;
 
     //----------------
 
@@ -749,7 +767,7 @@ var map_bg_ctx =false;
 //----------------------------------------------------------------------------------------------------------------------
 
 
-function mapMove(deltaX,deltaY) {
+function mapMove(deltaX,deltaY,noUpdate) {
 
     //----------------
 
@@ -779,8 +797,56 @@ function mapMove(deltaX,deltaY) {
 
     //console.log($('#map_bg').css('left'),map_bg_x,map_bg_y);
 
-    $('#map_bg').css('left', map_bg_x + deltaX);
-    $('#map_bg').css('top', map_bg_y + deltaY);
+    map_bg_x += deltaX;
+    map_bg_y += deltaY;
+
+    $('#map_bg').css('left', map_bg_x);
+    $('#map_bg').css('top', map_bg_y);
+
+
+
+        ///console.log(Math.pow(map_bg_x,2)+Math.pow(map_bg_y/2,2),(Math.pow(screen_x,2)+Math.pow(screen_y/2,2))/2    );
+
+        if(!noUpdate)
+        if(Math.pow(map_bg_x+canvas_width/3,2)+Math.pow(map_bg_y+canvas_width/3/2,2)>(Math.pow(screen_x,2)+Math.pow(screen_y/2,2))/32){
+
+            //alert(Math.pow(map_bg_x,2)+Math.pow(map_bg_y/2,2));
+            updateMap();
+
+    }
 
     //----------------
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
