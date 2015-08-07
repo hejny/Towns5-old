@@ -131,7 +131,7 @@ var server=http.createServer(function(req,res){
 	if(!q.zoom)q.zoom=5;
 
 	
-	res.end(renderMap(parseInt(q.x),parseInt(q.y),parseInt(q.zoom)));
+	//res.end(renderMap(parseInt(q.x),parseInt(q.y),parseInt(q.zoom)));
 
     res.end('Ahoj tohle je '+i+'. navsteva!<br>' + req.url);
 	console.log('muhaha from '+req.connection.remoteAddress);
@@ -147,6 +147,6 @@ server.on('listening',function(){
     console.log('ok, server is running');
 });
 
-server.listen(80);
+server.listen(8888);
 
 
