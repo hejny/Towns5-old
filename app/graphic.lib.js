@@ -11,9 +11,6 @@ var map_rotation=0;//Math.random()*360;
 var map_slope=30;
 
 
-//var map_perspective= 0.02;
-var map_perspective= 0;
-
 var map_x=(Math.random()-0.5)*10000;
 var map_y=map_x+(Math.random()-0.5)*2000;
 
@@ -26,7 +23,6 @@ var map_y=map_x+(Math.random()-0.5)*2000;
 var map_zoom_delta=0;
 var map_rotation_delta=0;
 var map_slope_delta=0;
-var map_perspective_delta= 0;
 
 var map_x_delta=0;
 var map_y_delta=0;
@@ -145,7 +141,7 @@ for(var terrain=0;terrain<terrainCount;terrain++) {
 
 
         all_images_bg[terrain][seed] = new Image();
-        all_images_bg[terrain][seed].src = 'terrain.php?terrain=t' + (terrain+1)/*Teren 0 je temnota*/ + '&seed=' + seed + '&size=120';
+        all_images_bg[terrain][seed].src = 'app/graphic/terrain.php?terrain=t' + (terrain+1)/*Teren 0 je temnota*/ + '&seed=' + seed + '&size=120';
 
         all_images_bg[terrain][seed].onload = imageLoad;
 
@@ -160,7 +156,7 @@ for (var seed = 0; seed < treeCount; seed++) {
 
 
     all_images_tree[seed] = new Image();
-    all_images_tree[seed].src = 'treerock.php?type=tree&seed=' + seed + '&width=100';
+    all_images_tree[seed].src = 'app/graphic/treerock.php?type=tree&seed=' + seed + '&width=100';
     //all_images_tree[seed].src = 'ui/image/tree/' + seed + '.png';
 
     all_images_tree[seed].onload = imageLoad;
@@ -174,7 +170,7 @@ for (var seed = 0; seed < rockCount; seed++) {
 
 
     all_images_rock[seed] = new Image();
-    all_images_rock[seed].src = 'treerock.php?type=rock&seed=' + seed + '&width=133';
+    all_images_rock[seed].src = 'app/graphic/treerock.php?type=rock&seed=' + seed + '&width=133';
 
     all_images_rock[seed].onload = imageLoad;
 
@@ -327,27 +323,17 @@ function drawMap(){
                     //z += 8000;
                     //z+=canvas_height-(map_size*160);
 
+                    var size=(Math.sin((world_x*world_y)/10)/4)+1;
 
                     var width = Math.ceil(160 * size * 3 * map_zoom_m);
-                    var height = Math.ceil(width  /* map_zoom_m*/);
+                    var height = Math.ceil(width  * size /* map_zoom_m*/);
 
 
                     screen_x = ((map_rotation_cos * xc - map_rotation_sin * yc ) * 160 - 160*size) * map_zoom_m;
                     screen_y = ((map_rotation_sin * xc + map_rotation_cos * yc ) * 160 - 160*size) / map_slope_m * map_zoom_m + z / map_slope_n * map_zoom_m;
 
 
-                    var horizont = (map_rotation_sin * xc + map_rotation_cos * yc - 1);
-                    horizont = Math.pow(1 + (map_perspective * (1 - (1 / map_slope_m))), horizont);
 
-
-                    //(screen_y/canvas_height)
-
-                    screen_x = screen_x * horizont;
-                    screen_y = screen_y * horizont;
-                    width = width * horizont;
-                    height = height * horizont;
-
-                    //Posuv Dolu//screen_y -= canvas_height*(Math.pow(map_slope_m,map_perspective)-1)*10;
 
                     screen_x += (canvas_width / 2);
                     screen_y += (canvas_height / 2);
@@ -394,9 +380,9 @@ function drawMap(){
 
 
                             if(terrain==9){
-                                var size=1;
+                                var size=Math.sin(Math.pow(world_x*world_y,(1/1.5))/10)/6+1;
                             }else{
-                                var size=1*(Math.sin((Math.pow(world_x,4)+Math.pow(world_y,2))/10)+1);
+                                var size=Math.sin(Math.pow(world_x*world_y,(1/2))/10)/2+1.62;
                              }
 
 
@@ -415,17 +401,9 @@ function drawMap(){
                             object_screen_y = ((map_rotation_sin * object_xc + map_rotation_cos * object_yc ) * 160 - 160*size) / map_slope_m * map_zoom_m + (z-300) / map_slope_n * map_zoom_m;
 
 
-                            var horizont = (map_rotation_sin * object_xc + map_rotation_cos * object_yc - 1);
-                            horizont = Math.pow(1 + (map_perspective * (1 - (1 / map_slope_m))), horizont);
-
-
-                            object_screen_x = object_screen_x * horizont;
-                            object_screen_y = object_screen_y * horizont;
 
                             object_screen_x += (canvas_width / 2)  + (width/2)  - (object_width/2);
                             object_screen_y += (canvas_height / 2) + (height/2) - (object_height)+(object_width/2)/*-40+object_deep*/;
-
-                            //Posuv Dolu//object_screen_y -= canvas_height*(Math.pow(map_slope_m,map_perspective)-1)*10;
 
 
                             map_bg_ctx.drawImage(
@@ -564,7 +542,6 @@ function updateMap(ms){
     map_zoom+=map_zoom_delta*ms/1000;
     map_rotation+=map_rotation_delta*ms/1000;
     map_slope+=map_slope_delta*ms/1000;
-    map_perspective+=map_perspective_delta*ms/1000;
 
     map_x+=map_x_delta*ms/1000;
     map_y+=map_y_delta*ms/1000;
@@ -578,7 +555,6 @@ function updateMap(ms){
     map_zoom=Math.round(map_zoom*100)/100;
     map_rotation=Math.round(map_rotation*10)/10;
     map_slope=Math.round(map_slope*10)/10;
-    map_perspective=Math.round(map_perspective*10000)/10000;
 
     map_x=Math.round(map_x*100)/100;
     map_y=Math.round(map_y*100)/100;
@@ -594,10 +570,6 @@ function updateMap(ms){
 
     if(map_zoom>-1.5)map_zoom=-1.5;
     if(map_zoom<-4)map_zoom=-4;
-
-
-    if(map_perspective<0)map_perspective=0;
-    if(map_perspective>0.5)map_perspective=0.5;
 
 
     //----------------Zm
@@ -647,7 +619,6 @@ function updateMap(ms){
     map_zoom_delta=0;
     map_rotation_delta=0;
     map_slope_delta=0;
-    map_perspective_delta= 0;
     map_x_delta=0;
     map_y_delta=0;
     map_size_delta=0;
@@ -690,7 +661,6 @@ function updateMap(ms){
     $('#map_zoom').html(map_zoom);
     $('#map_rotation').html(map_rotation);
     $('#map_slope').html(map_slope);
-    $('#map_perspective').html(map_perspective);
     $('#map_x').html(map_x);
     $('#map_y').html(map_y);
     $('#map_size').html(map_size);

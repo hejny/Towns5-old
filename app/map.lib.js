@@ -323,7 +323,7 @@ var terrains=[
 	[ 7 , 20 , 'DCDCAC'] ,  //sůl
 	[ 9 , 22 , '51F311'] ,  //tráva(toxic)
 	[12 , 24 , '8ABC02'] ,  //tráva(jaro)
-	[ 8 , 26 , '2A7302'] ,  //tráva(normal)
+	[ 8 , 29 , '2A7302'] ,  //tráva(normal)
 	[13 , 30 , '8A9002'] ,  //tráva(pozim)
 	[10 , 35 , '535805'] ,  //les
 	[ 5 , 37 , '878787'] ,  //kamení
