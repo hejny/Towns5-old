@@ -1,5 +1,19 @@
 var db = require('./db');
 
+
+/*
+ Changes in this db.Schema should be applied in all object schema files!
+
+
+ ObjectsPrototypesHistory
+ ←
+ ObjectsPrototypes
+ →
+ Objects
+ →
+ ObjectsHistory - current
+
+ */
 var historySchema = new db.Schema({
     _currentId: { type: String, required:true },
     version: {type: Number, required: true, default: 1},
